@@ -3,12 +3,14 @@ import { save, load, remove } from "./storage";
 
 const iframe = document.querySelector('iframe');
 const player = new Player(iframe);
-let currentTime;
 
-const SavingCurrentTimeToLocalStorage = function (data) {
-    currentTime = localStorage.setItem("videoplayer-current-time", JSON.stringify(data.seconds));
+const savingCurrentTimeToLocalStorage = function (data) {
+    localStorage.setItem("videoplayer-current-time", JSON.stringify(data.seconds));
 }
 
-player.setCurrentTime(currentTime).then
+const currentTimeFromLocalStorage = localStorage.getItem("videoplayer-current-time");
+const parsedCurrentTimeFromLocalStorage = JSON.parse(currentTimeFromLocalStorage);
 
-player.on('timeupdate', SavingCurrentTimeToLocalStorage);
+player.setCurrentTime(parsedCurrentTimeFromLocalStorage);
+
+player.on('timeupdate', savingCurrentTimeToLocalStorage);
