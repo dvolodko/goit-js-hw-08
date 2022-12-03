@@ -10,16 +10,27 @@ const refs = {
 };
 
 refs.form.addEventListener('submit', onFormSubmit);
-refs.form.addEventListener('input', onFormInput);
+refs.form.addEventListener('input', throttle(onFormInput, 500));
+
+populateForm();
 
 function onFormInput(e) {
   formData[e.target.name] = e.target.value;
-  console.log(formData);
   save(STORAGE_KEY, formData);
 }
 
 function onFormSubmit(e) {
   e.preventDefault();
+  console.log(formData);
   e.currentTarget.reset();
   remove(STORAGE_KEY);
+}
+
+function populateForm() {
+  const savedFormData = load(STORAGE_KEY);
+
+  if (savedFormData) {
+    refs.form.email.value = savedFormData.email;
+    refs.form.message.value = savedFormData.message;
+  }
 }
