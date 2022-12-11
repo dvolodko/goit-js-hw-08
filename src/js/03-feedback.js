@@ -29,10 +29,18 @@ function onFormInput(e) {
 }
 
 function onFormSubmit(e) {
-  e.preventDefault();
-  console.log(formData);
-  e.currentTarget.reset();
-  remove(STORAGE_KEY);
+  if (formData.email && formData.message) {
+    e.preventDefault();
+    console.log(formData);
+    e.currentTarget.reset();
+    remove(STORAGE_KEY);
+    formData = {
+      email: '',
+      message: '',
+    };
+  } else {
+    alert('Please fill both input fields');
+  }
 }
 
 function populateForm() {
