@@ -84,7 +84,7 @@ const markup = images
 gallery.innerHTML = markup;
 
 function galleryClickHandler(e) {
-	if (e.target === gallery) {
+	if (e.target.nodeName !== "IMG") {
 		return;
 	} else {
 		e.preventDefault();
